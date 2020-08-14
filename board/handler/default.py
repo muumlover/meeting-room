@@ -3,13 +3,13 @@
 
 """
 @Time    : 2020/8/13 21:49
-@Author  : Sam Wang
+@Author  : Sam Wong
 @Email   : muumlover@live.com
 @Blog    : https://blog.ronpy.com
 @Project : MeetingRoom
 @FileName: default.py
 @Software: PyCharm 
-@license : (C) Copyright 2020 by Sam Wang. All rights reserved.
+@license : (C) Copyright 2020 by Sam Wong. All rights reserved.
 @Desc    : 
     
 """
