@@ -13,14 +13,26 @@
 @Desc    : 
     
 """
+import logging
+import pathlib
 
+import aiohttp_jinja2
+import jinja2
 from aiohttp import web
 
 from board.router import setup_router
 
 app = web.Application()
 
+base_path = pathlib.Path.cwd() / 'board'
+aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader(str(base_path / 'template')))
+# app.router.add_static('/static', base_path / 'static')
+
 setup_router(app.router)
 
 if __name__ == '__main__':
+    logging.basicConfig(
+        format='%(levelname)s: %(asctime)s [%(pathname)s:%(lineno)d] %(message)s',
+        level=logging.NOTSET
+    )
     web.run_app(app)

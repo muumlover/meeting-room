@@ -2,22 +2,23 @@
 # encoding: utf-8
 
 """
-@Time    : 2020/8/13 21:43
+@Time    : 2020/8/14 21:50
 @Author  : Sam Wong
 @Email   : muumlover@live.com
 @Blog    : https://blog.ronpy.com
 @Project : MeetingRoom
-@FileName: router.py
+@FileName: date_util.py
 @Software: PyCharm 
 @license : (C) Copyright 2020 by Sam Wong. All rights reserved.
 @Desc    : 
     
 """
+import calendar
 
-from board.handler import *
+
+def get_monthcalendar(year, month):
+    return calendar.monthcalendar(year, month)
 
 
-def setup_router(router):
-    router.add_route('GET', '/', handle_view)
-    router.add_route('GET', '/echo', wshandle)
-    router.add_route('GET', '/{name}', handle)
+def get_monthrange(year, month):
+    return calendar.monthrange(year, month)

@@ -13,12 +13,12 @@
 @Desc    : 
     
 """
-import calendar
+import aiohttp_jinja2
 
 
-def get_monthcalendar(year, month):
-    return calendar.monthcalendar(year, month)
+async def handle_view(request):
+    name = request.match_info.get('name', "Anonymous")
 
-
-def get_monthrange(year, month):
-    return calendar.monthrange(year, month)
+    context = {'name': name,  'surname': 'Svetlov'}
+    response = aiohttp_jinja2.render_template('month_view.jinja2', request, context)
+    return response

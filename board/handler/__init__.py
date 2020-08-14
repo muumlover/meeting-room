@@ -15,3 +15,4 @@
 """
 
 from .default import *
+from .view import *
