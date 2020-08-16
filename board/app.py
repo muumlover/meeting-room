@@ -24,9 +24,14 @@ from board.router import setup_router
 
 app = web.Application()
 
-base_path = pathlib.Path.cwd() / 'board'
-aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader(str(base_path / 'template')))
-# app.router.add_static('/static', base_path / 'static')
+board_path = pathlib.Path.cwd() / 'board'
+webroot_path = pathlib.Path.cwd() / 'webroot'
+
+jinja_env = aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader(str(webroot_path)))
+jinja_env.variable_start_string = '{['
+jinja_env.variable_end_string = ']}'
+
+app.router.add_static('/static', webroot_path / 'static')
 
 setup_router(app.router)
 

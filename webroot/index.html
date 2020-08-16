@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Meeting Room</title>
+    <script src="/static/js/vue.js"></script>
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/semantic.js"></script>
+    <link href="/static/css/semantic.css" rel="stylesheet">
+</head>
+<body>
+<div class="wrapper" id="app">
+    <div class="header">
+        <span class="glyphicon glyphicon-chevron-left pull-left"></span>
+        <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+        <p>January 2015</p>
+    </div><!-- end header -->
+    <div class="ui seven column grid calendar-body">
+        <div class="row weekdays">
+            <div class="column"><p>周一</p></div><!-- end column -->
+            <div class="column"><p>周二</p></div><!-- end column -->
+            <div class="column"><p>周三</p></div><!-- end column -->
+            <div class="column"><p>周四</p></div><!-- end column -->
+            <div class="column"><p>周五</p></div><!-- end column -->
+            <div class="column"><p>周六</p></div><!-- end column -->
+            <div class="column"><p>周日</p></div><!-- end column -->
+        </div><!-- end row -->
+        <div class="row dates" v-for="week in calendar">
+            <div class="column" v-for="day in week">
+                <a href="#">
+                    <p>
+                        <day-view :props="day"></day-view>
+                    </p>
+                </a>
+            </div>
+        </div><!-- end row -->
+    </div><!-- end calendar-body -->
+</div><!-- end wrapper -->
+
+<div class="ui modal">
+    <i class="close icon"></i>
+    <div class="header">
+        资料图片
+    </div>
+    <div class="image content">
+        <div class="ui medium image">
+            <img src="../images/avatar/large/chris.jpg">
+        </div>
+        <div class="description">
+            <div class="ui header">我们为你自动选择了一张资料图片.</div>
+            <p>我们从<a href="https://www.gravatar.com" target="_blank">gravatar</a>抓取的下面这些图片，图像与你注册的邮箱地址相关.</p>
+            <p>可以使用这张照片吗?</p>
+        </div>
+    </div>
+    <div class="actions">
+        <div class="ui black deny button">
+            不可以
+        </div>
+        <div class="ui positive right labeled icon button">
+            是的，那是我
+            <i class="checkmark icon"></i>
+        </div>
+    </div>
+</div>
+
+<!-- define component day-view -->
+<script type="text/x-template" id="day-view">
+    <div>
+        <button v-on:click="count++">You clicked me {{ count }} times {{ props.day }}.</button>
+        <button v-on:click="show">You clicked me {{ count }} times {{ props.day }}.</button>
+    </div>
+</script>
+<script>
+    Vue.component('day-view', {
+        props: ['props'],
+        data: function () {
+            return {
+                count: 0
+            }
+        },
+        template: '#day-view',
+        methods: {
+            show: () => {
+                $('.ui.modal')
+                    .modal('show')
+                ;
+            }
+        }
+
+    })
+</script>
+<!-- end define day-view -->
+
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            message: '页面加载于 ' + new Date().toLocaleString(),
+            calendar: [
+                [{day: 1}, {day: 2}, {day: 3}, {day: 4}, {day: 5}, {day: 6}, {day: 7}],
+                [{day: 8}, {day: 9}, {day: 10}, {day: 11}, {day: 12}, {day: 13}, {day: 14}]
+            ]
+        }
+    })
+</script>
+</body>
+</html>

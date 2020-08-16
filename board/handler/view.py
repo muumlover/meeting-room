@@ -19,6 +19,6 @@ import aiohttp_jinja2
 async def handle_view(request):
     name = request.match_info.get('name', "Anonymous")
 
-    context = {'name': name,  'surname': 'Svetlov'}
-    response = aiohttp_jinja2.render_template('month_view.jinja2', request, context)
+    context = {'name': name, 'surname': 'Svetlov'}
+    response = aiohttp_jinja2.render_template('index.html', request, context)
     return response
