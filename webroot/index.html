@@ -8,14 +8,6 @@
     <script src="/static/js/semantic.js"></script>
     <link href="/static/css/semantic.css" rel="stylesheet">
     <style>
-        .timespan {
-            height: 10px;
-            width: 2px
-        }
-
-        .free {
-            opacity: 30%
-        }
 
         .room-table {
             border-spacing: 0 5px
@@ -27,6 +19,18 @@
 
         .room-name {
             padding-right: 10px;
+        }
+
+        .time-free {
+            height: 20px;
+            width: 2px;
+            opacity: 30%;
+        }
+
+        .time-used {
+            height: 20px;
+            width: 2px;
+            opacity: 100%;
         }
 
         /* class tooltip start */
@@ -168,7 +172,7 @@
     <table class="room-table">
         <tr class="room-row" v-for="room in rooms" v-on:click="show(room.key)">
             <td class="room-name" :title="room.name"> {{ room.name }}</td>
-            <td v-for="h in 48" class="timespan tooltip" :class="{free: day.events[room.key][h]===''}"
+            <td v-for="h in 48" class="tooltip" :class="[day.events[room.key][h]!==''?'time-used':'time-free']"
                 :style="{backgroundColor: room.color}">
                 <div v-if="day.events[room.key][h]!==''" class="tooltip-text">{{ room.name }}</div>
             </td>
