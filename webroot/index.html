@@ -173,9 +173,10 @@
         <tr class="room-row" v-for="room in rooms" v-on:click="show(room.key)">
             <td class="room-name" :title="room.name"> {{ room.name }}</td>
             <td v-for="h in 48" class="tooltip" :class="[day.events[room.key][h]!==''?'time-used':'time-free']"
-                :style="{backgroundColor: room.color}">
+                :style="{backgroundColor: room.color}"><a href="//baidu.com" target="_blank">
                 <div v-if="day.events[room.key][h]!==''" class="tooltip-text">{{ events[day.events[room.key][h]].text }}
                 </div>
+            </a>
             </td>
         </tr>
     </table>
@@ -308,6 +309,9 @@
                     }
                 }]
             ]
+        },
+        mounted() {
+            alert("aa")
         }
     });
     window.vm = vm;
