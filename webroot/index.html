@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Meeting Room</title>
     <script src="/static/js/vue.js"></script>
+    <script src="/static/js/vuex.js"></script>
     <script src="/static/js/jquery.js"></script>
     <script src="/static/js/semantic.js"></script>
     <link href="/static/css/semantic.css" rel="stylesheet">
@@ -203,8 +204,14 @@
 <!-- end define day-view -->
 
 <script>
+    const store = new Vuex.Store({
+        state: {
+            title: "Hello Title"
+        }
+    })
     const vm = new Vue({
         el: '#app',
+        store,
         data: {
             message: '页面加载于 ' + new Date().toLocaleString(),
             rooms: [{
@@ -311,7 +318,10 @@
             ]
         },
         mounted() {
-            alert("aa")
+            console.log(this);
+            console.log(this.$store);
+            console.log(this.$store.state);
+            console.log(this.$store.state.title);
         }
     });
     window.vm = vm;
