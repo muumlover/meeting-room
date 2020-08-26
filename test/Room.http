@@ -1,0 +1,13 @@
+GET http://localhost:8080/handle_query_rooms
+Accept: application/json
+
+###
+
+POST http://localhost:8080/handle_add_rooms
+Content-Type: application/json
+
+{
+  "name": "31F"
+}
+
+###
