@@ -66,7 +66,7 @@
         <div>{{ day.number }}</div>
         <table class="room-table">
             <tr class="room-row" v-for="room in rooms" @click="show(room.key)">
-                <td class="room-name" :title="'预定'+room.desc"> {{ room.name }}</td>
+                <td class="room-name" :title="'预定'+room.describe"> {{ room.name }}</td>
                 <template v-for="h in 48">
                     <template v-if="day.events[room.key][h]!==''">
                         <td class="time-used tooltip" :style="{backgroundColor: room.color}" @click.stop>
@@ -75,7 +75,7 @@
                             </div>
                         </td>
                     </template>
-                    <td v-else class="time-free" :style="{backgroundColor: room.color}" :title="'预定'+room.desc"></td>
+                    <td v-else class="time-free" :style="{backgroundColor: room.color}" :title="'预定'+room.describe"></td>
                 </template>
             </tr>
         </table>

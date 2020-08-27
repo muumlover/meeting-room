@@ -28,17 +28,12 @@ const vm = new Vue({
         rooms: [{
             key: 'r1',
             name: '31F-1',
-            desc: '31楼一号会议室',
+            describe: '31楼一号会议室',
             color: "#119922",
         }, {
             key: 'r2',
             name: '31F-2',
-            desc: '31楼一号会议室',
-            color: "#866322",
-        }, {
-            key: 'r3',
-            name: '31楼一号会议室',
-            desc: '31楼一号会议室',
+            describe: '31楼一号会议室',
             color: "#866322",
         }],
         events: {
