@@ -18,8 +18,8 @@ from ._pdbc import *
 
 
 class Room(ModuleBase):
-    available = BooleanField()
-
-    name = CharField()
-    describe = CharField()
-    capacity = IntegerField()
+    key = PrimaryKeyField(primary_key=True)
+    name = CharField(required=True)
+    describe = CharField(default='无')
+    capacity = IntegerField(default=0)
+    available = BooleanField(default=True)

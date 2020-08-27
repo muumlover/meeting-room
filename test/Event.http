@@ -1,0 +1,22 @@
+GET http://localhost:8080/api/event
+Accept: application/json
+
+###
+
+GET http://localhost:8080/api/event/1
+Accept: application/json
+
+###
+
+POST http://localhost:8080/api/event
+Content-Type: application/json
+
+{
+  "name": "31F",
+  "describe": "31F",
+  "date": "20200827",
+  "start_time": "21:00",
+  "end_time": "22:00"
+}
+
+###

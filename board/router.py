@@ -17,9 +17,12 @@
 from board.handler import *
 
 
-
 def setup_router(router):
     router.add_route('GET', '/', handle_view)
     router.add_route('GET', '/echo', wshandle)
-    router.add_route('GET', '/handle_query_rooms', handle_query_rooms)
-    router.add_route('POST', '/handle_add_rooms', handle_add_rooms)
+
+    router.add_view(r'/api/room{_:/?}{key:.*}', RoomView)
+    router.add_view(r'/api/event{_:/?}{key:.*}', EventView)
+
+    router.add_route('GET', '/api/group', handle_query_groups)
+    router.add_route('GET', '/api/user', handle_query_users)

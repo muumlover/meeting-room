@@ -23,37 +23,32 @@ if TYPE in ['SQLITE']:
     from peewee import CharField
     from peewee import IntegerField
     from peewee import BooleanField
+    from peewee import DateField
+    from peewee import TimeField
     from peewee import DateTimeField
-    from peewee import UUIDField
+    from peewee import PrimaryKeyField
     from peewee import TimestampField
 
     database = SqliteDatabase('meeting-room.db')
 elif TYPE == 'MONGO':
     from mongoengine import connect
 
-    from mongoengine import Document as Model
+    from mongoengine import Document as ModuleBase
     from mongoengine import StringField as CharField
     from mongoengine import IntField as IntegerField
     from mongoengine import BooleanField
+    from mongoengine import DateField
+    from mongoengine import DateTimeField as TimeField
     from mongoengine import DateTimeField
-    from mongoengine import UUIDField
+    from mongoengine import SequenceField as PrimaryKeyField
     from mongoengine import IntField as TimestampField
 
     from mongoengine import ObjectIdField
 
-    connect('meeting-room', host='mongodb://192.168.199.2/meeting-room')
+    connect('meeting-room', host='mongodb://192.168.199.3/meeting-room')
 
-
-class ModuleBase(Model):
-    if TYPE in ['SQLITE']:
+if TYPE in ['SQLITE']:
+    class ModuleBase(Model):
         class Meta:
             database = database
 
-        id = UUIDField(primary_key=True)
-        create_timestamp = TimestampField()
-        update_timestamp = TimestampField()
-    elif TYPE == 'MONGO':
-        meta = {'allow_inheritance': True}
-
-    def to_http_json(self):
-        return json_util.dumps(self.to_mongo(fields=[x for x in self._fields_ordered if not x.startswith('_')]))

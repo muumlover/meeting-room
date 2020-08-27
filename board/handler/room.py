@@ -21,21 +21,26 @@ from module.room import Room
 from util.response import Response
 
 
-async def handle_query_rooms(request: web.Request):
-    rooms = Room.objects()
-    rooms_data = json.loads(rooms.to_json())
-    return web.json_response({
-        'rooms': rooms_data
-    })
+class RoomView(web.View):
+    async def get(self):
+        key = self.request.match_info.get('key', None)
+        if not key:
+            return web.json_response({
+                'items': [json.loads(room.to_json(use_db_field=False)) for room in Room.objects()]
+            })
+        else:
+            rooms = Room.objects(key=key)
+            return web.json_response({
+                'data': json.loads(rooms[0].to_json(use_db_field=False)) if len(rooms) > 0 else None
+            })
 
-
-async def handle_add_rooms(request: web.Request):
-    room_data = await request.json()
-    if room_data.get('name', None) is None:
-        raise web.HTTPBadRequest(text='key "name" is loss')
-    room = Room(**room_data)
-    rooms = Room.objects(name=room.name)
-    if len(rooms) > 0:
-        return web.json_response(Response.ROOM_EXIST)
-    room.save()
-    return web.json_response(Response.SUCCESS)
+    async def post(self):
+        room_data = await self.request.json()
+        if room_data.get('name', None) is None:
+            raise web.HTTPBadRequest(text='key "name" is loss')
+        room = Room(**room_data)
+        rooms = Room.objects(name=room.name)
+        if len(rooms) > 0:
+            return web.json_response(Response.ROOM_EXIST)
+        room.save()
+        return web.json_response(Response.SUCCESS)

@@ -15,5 +15,8 @@
 """
 
 from .default import *
-from .view import *
+from .event import *
+from .group import *
 from .room import *
+from .user import *
+from .view import *

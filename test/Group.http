@@ -1,0 +1,4 @@
+GET http://localhost:8080/handle_query_groups
+Accept: application/json
+
+###

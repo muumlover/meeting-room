@@ -16,7 +16,7 @@
 from ._pdbc import *
 
 
-class User(ModuleBase):
+class Right(ModuleBase):
     name = CharField()
     describe = CharField()
     capacity = IntegerField()

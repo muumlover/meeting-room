@@ -17,7 +17,14 @@ from ._pdbc import *
 
 
 class Event(ModuleBase):
-    name = CharField()
-    describe = CharField()
-    start_time = DateTimeField()
-    end_time = DateTimeField()
+    key = PrimaryKeyField(primary_key=True)
+    name = CharField(required=True)
+    describe = CharField(required=True)
+    date = DateField(required=True)
+    start_time = TimeField(required=True)
+    end_time = TimeField(required=True)
+
+    create_time = DateTimeField(required=True)
+
+    user_key = IntegerField(required=True)
+    room_key = IntegerField(required=True)
