@@ -37,7 +37,7 @@ setup_router(app.router)
 
 if __name__ == '__main__':
     logging.basicConfig(
-        format='%(levelname)s: %(asctime)s [%(pathname)s:%(lineno)d] %(message)s',
+        format='%(levelname)s: %(asctime)s %(name)s [%(filename)s:%(lineno)d] %(message)s',
         level=logging.NOTSET
     )
     web.run_app(app)

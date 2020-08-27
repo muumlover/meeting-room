@@ -12,6 +12,7 @@ POST http://localhost:8080/api/event
 Content-Type: application/json
 
 {
+  "room_key": 2,
   "name": "31F",
   "describe": "31F",
   "date": "20200827",

@@ -17,4 +17,5 @@
 
 class Response:
     SUCCESS = {'code': 0, 'msg': '操作成功'}
+    UNKNOWN_ERROR = {'code': -1, 'msg': '未知错误'}
     ROOM_EXIST = {'code': -1, 'msg': '已存在同名会议室'}

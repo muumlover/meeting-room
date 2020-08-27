@@ -18,6 +18,8 @@ from datetime import datetime
 from aiohttp import web
 
 from module.event import Event
+from module.room import Room
+from util.checker import Checker
 from util.response import Response
 
 
@@ -47,11 +49,23 @@ class EventView(web.View):
 
     async def post(self):
         event_data = await self.request.json()
+
+        room_key = event_data.get('room_key')
+        Checker.cant_none(room_key=room_key)
+        rooms = Room.objects(key=room_key)
+        if not rooms:
+            return web.json_response(Response.UNKNOWN_ERROR)
+        room = rooms[0]
+
         event = Event()
         event.name = event_data.get('name')
         event.describe = event_data.get('describe')
         event.date = datetime.strptime(event_data.get('date'), '%Y%m%d')
         event.start_time = datetime.strptime(event_data.get('start_time'), '%H:%M')
         event.end_time = datetime.strptime(event_data.get('end_time'), '%H:%M')
+        event.create_time = datetime.now()
+
+        event.room_key = room.key
+        event.user_key = 0
         event.save()
         return web.json_response(Response.SUCCESS)
