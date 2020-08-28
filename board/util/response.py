@@ -13,9 +13,22 @@
 @Desc    : 
     
 """
+from aiohttp import web
 
 
 class Response:
     SUCCESS = {'code': 0, 'msg': '操作成功'}
     UNKNOWN_ERROR = {'code': -1, 'msg': '未知错误'}
     ROOM_EXIST = {'code': -1, 'msg': '已存在同名会议室'}
+
+    @staticmethod
+    def list(func, objects):
+        return web.json_response({
+            'items': [func(room) for room in objects]
+        })
+
+    @staticmethod
+    def data(func, objects):
+        return web.json_response({
+            'data': func(objects[0]) if len(objects) > 0 else None
+        })

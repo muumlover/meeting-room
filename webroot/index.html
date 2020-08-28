@@ -6,6 +6,8 @@
     <script src="/static/js/vue.js"></script>
     <script src="/static/js/vuex.js"></script>
     <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/axios.js"></script>
+    <script src="/static/js/axios.min.js"></script>
     <script src="/static/js/semantic.js"></script>
     <link href="/static/css/semantic.css" rel="stylesheet">
 </head>
@@ -28,7 +30,7 @@
         </div><!-- end row -->
         <div class="row dates" v-for="week in calendar">
             <div class="column" v-for="day in week">
-                <day-view :rooms="rooms" :events="events" :day="day"></day-view>
+                <day-view :day="day"></day-view>
             </div>
         </div><!-- end row -->
     </div><!-- end calendar-body -->
@@ -41,7 +43,7 @@
     </div>
     <div class="image content">
         <div class="ui medium image">
-            <img src="../images/avatar/large/chris.jpg">
+            <img src="https://avatar-static.segmentfault.com/162/514/1625149515-5ba3739e5d543_big64">
         </div>
         <div class="description">
             <div class="ui header">我们为你自动选择了一张资料图片.</div>
@@ -68,14 +70,15 @@
             <tr class="room-row" v-for="room in rooms" @click="show(room.key)">
                 <td class="room-name" :title="'预定'+room.describe"> {{ room.name }}</td>
                 <template v-for="h in 48">
-                    <template v-if="day.events[room.key][h]!==''">
+                    <template v-if="room.key in day.events && day.events[room.key][h]!=null">
                         <td class="time-used tooltip" :style="{backgroundColor: room.color}" @click.stop>
-                            <div v-if="day.events[room.key][h]!==''" class="tooltip-text">
+                            <div v-if="day.events[room.key][h]!=null" class="tooltip-text">
                                 {{ events[day.events[room.key][h]].text }}
                             </div>
                         </td>
                     </template>
-                    <td v-else class="time-free" :style="{backgroundColor: room.color}" :title="'预定'+room.describe"></td>
+                    <td v-else class="time-free" :style="{backgroundColor: room.color}"
+                        :title="'预定'+room.describe"></td>
                 </template>
             </tr>
         </table>

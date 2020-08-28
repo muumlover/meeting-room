@@ -14,6 +14,7 @@
     
 """
 from aiohttp import web
+from mongoengine import ValidationError
 
 
 class Checker:
@@ -22,6 +23,8 @@ class Checker:
         miss_field = []
         for k, v in kwargs.items():
             if v is None:
+                miss_field.append(k)
+            elif isinstance(v, ValidationError):
                 miss_field.append(k)
             pass
         if miss_field:

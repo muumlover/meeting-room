@@ -16,6 +16,7 @@
 from datetime import datetime
 
 from aiohttp import web
+from mongoengine import ValidationError
 
 from module.event import Event
 from module.room import Room
@@ -38,14 +39,9 @@ class EventView(web.View):
             }
 
         if not key:
-            return web.json_response({
-                'items': [to_json(event) for event in Event.objects()]
-            })
+            return Response.list(to_json, Event.objects())
         else:
-            events = Event.objects(key=key)
-            return web.json_response({
-                'data': to_json(events[0]) if len(events) > 0 else None
-            })
+            return Response.data(to_json, Event.objects(key=key))
 
     async def post(self):
         event_data = await self.request.json()
@@ -59,13 +55,18 @@ class EventView(web.View):
 
         event = Event()
         event.name = event_data.get('name')
-        event.describe = event_data.get('describe')
+        event.describe = event_data.get('describe', '无')
         event.date = datetime.strptime(event_data.get('date'), '%Y%m%d')
         event.start_time = datetime.strptime(event_data.get('start_time'), '%H:%M')
         event.end_time = datetime.strptime(event_data.get('end_time'), '%H:%M')
-        event.create_time = datetime.now()
 
         event.room_key = room.key
         event.user_key = 0
-        event.save()
+
+        event.create_time = datetime.now()
+
+        try:
+            event.save()
+        except ValidationError as e:
+            Checker.cant_none(**e.errors)
         return web.json_response(Response.SUCCESS)

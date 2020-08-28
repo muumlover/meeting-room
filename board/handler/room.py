@@ -13,34 +13,54 @@
 @Desc    : 
     
 """
-import json
+from datetime import datetime
 
 from aiohttp import web
+from mongoengine import ValidationError
 
 from module.room import Room
+from util.checker import Checker
 from util.response import Response
 
 
 class RoomView(web.View):
     async def get(self):
         key = self.request.match_info.get('key', None)
+
+        def to_json(room):
+            return {
+                'key': room.key,
+                'name': room.name,
+                'color': room.color,
+                'describe': room.describe,
+                'capacity': room.capacity
+            }
+
         if not key:
-            return web.json_response({
-                'items': [json.loads(room.to_json(use_db_field=False)) for room in Room.objects()]
-            })
+            return Response.list(to_json, Room.objects())
         else:
-            rooms = Room.objects(key=key)
-            return web.json_response({
-                'data': json.loads(rooms[0].to_json(use_db_field=False)) if len(rooms) > 0 else None
-            })
+            return Response.data(to_json, Room.objects(key=key))
 
     async def post(self):
         room_data = await self.request.json()
-        if room_data.get('name', None) is None:
-            raise web.HTTPBadRequest(text='key "name" is loss')
-        room = Room(**room_data)
-        rooms = Room.objects(name=room.name)
+
+        room_name = room_data.get('name')
+        Checker.cant_none(room_name=room_name)
+        rooms = Room.objects(name=room_name)
         if len(rooms) > 0:
             return web.json_response(Response.ROOM_EXIST)
-        room.save()
+
+        room = Room(**room_data)
+        room.name = room_data.get('name')
+        room.color = room_data.get('color')
+        room.describe = room_data.get('describe', '无')
+        room.capacity = room_data.get('capacity', 0)
+        room.available = room_data.get('available', True)
+
+        room.create_time = datetime.now()
+
+        try:
+            room.save()
+        except ValidationError as e:
+            Checker.cant_none(**e.errors)
         return web.json_response(Response.SUCCESS)

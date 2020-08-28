@@ -12,7 +12,8 @@ POST http://localhost:8080/api/room
 Content-Type: application/json
 
 {
-  "name": "31F"
+  "name": "10F",
+  "color": "#991122"
 }
 
 ###

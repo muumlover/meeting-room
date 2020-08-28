@@ -20,6 +20,9 @@ from ._pdbc import *
 class Room(ModuleBase):
     key = PrimaryKeyField(primary_key=True)
     name = CharField(required=True)
-    describe = CharField(default='无')
-    capacity = IntegerField(default=0)
-    available = BooleanField(default=True)
+    color = CharField(required=True)
+    describe = CharField(required=True)
+    capacity = IntegerField(required=True)
+    available = BooleanField(required=True)
+
+    create_time = DateTimeField(required=True)

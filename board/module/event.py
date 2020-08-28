@@ -24,7 +24,7 @@ class Event(ModuleBase):
     start_time = TimeField(required=True)
     end_time = TimeField(required=True)
 
-    create_time = DateTimeField(required=True)
-
     room_key = IntegerField(required=True)
     user_key = IntegerField(required=True)
+
+    create_time = DateTimeField(required=True)

@@ -1,8 +1,11 @@
 Vue.component('day-view', {
-    props: ['rooms', 'events', 'day'],
-    data: function () {
-        return {
-            count: 0
+    props: ['day'],
+    computed: {
+        rooms: function () {
+            return this.$store.state.rooms
+        },
+        events: function () {
+            return this.$store.state.events
         }
     },
     template: '#day-view',
@@ -17,7 +20,9 @@ Vue.component('day-view', {
 })
 const store = new Vuex.Store({
     state: {
-        title: "Hello Title"
+        title: "Hello Title",
+        rooms: [],
+        events: {},
     }
 })
 const vm = new Vue({
@@ -25,110 +30,112 @@ const vm = new Vue({
     store,
     data: {
         message: '页面加载于 ' + new Date().toLocaleString(),
-        rooms: [{
-            key: 'r1',
-            name: '31F-1',
-            describe: '31楼一号会议室',
-            color: "#119922",
-        }, {
-            key: 'r2',
-            name: '31F-2',
-            describe: '31楼一号会议室',
-            color: "#866322",
-        }],
-        events: {
-            E11: {
-                text: '预定描述'
-            }
-        },
         calendar: [
             [{
                 number: 1,
                 events: {
-                    r1: ['', '', '', 'E11', 'E11', '', '', '', '', 'E11', '', '', '', '', 'E11', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
-                    r2: ['', '', '', '', '', '', '', '', 'E11', 'E11', 'E11', 'E11', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+                    10: [null, null, null, 11, 11, null, null, null, null, 11, null, null, null, null, 11, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+                    11: [null, null, null, null, null, null, null, null, 11, 11, 11, 11, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
                 }
             }, {
                 number: 2,
                 events: {
-                    r1: ['', '', '', 'E11', 'E11', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
-                    r2: ['', '', '', '', '', '', '', '', 'E11', 'E11', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+                    10: [null, null, null, 11, 11, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+                    11: [null, null, null, null, null, null, null, null, 11, 11, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
                 }
             }, {
                 number: 3,
                 events: {
-                    r1: ['', '', '', 'E11', 'E11', '', '', '', '', '', '', '', '', '', '', '', '', 'E11', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
-                    r2: ['', '', '', '', '', '', '', '', 'E11', 'E11', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'E11', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+                    10: [null, null, null, 11, 11, null, null, null, null, null, null, null, null, null, null, null, null, 11, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+                    11: [null, null, null, null, null, null, null, null, 11, 11, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 11, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
                 }
             }, {
                 number: 4,
                 events: {
-                    r1: ['', '', '', 'E11', 'E11', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
-                    r2: ['', '', '', '', '', '', '', '', 'E11', 'E11', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+                    10: [null, null, null, 11, 11, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+                    11: [null, null, null, null, null, null, null, null, 11, 11, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
                 }
             }, {
                 number: 5,
                 events: {
-                    r1: ['', '', '', 'E11', 'E11', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
-                    r2: ['', '', '', '', '', '', '', '', 'E11', 'E11', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+                    10: [null, null, null, 11, 11, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+                    11: [null, null, null, null, null, null, null, null, 11, 11, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
                 }
             }, {
                 number: 6,
                 events: {
-                    r1: ['', '', '', 'E11', 'E11', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
-                    r2: ['', '', '', '', '', '', '', '', 'E11', 'E11', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+                    10: [null, null, null, 11, 11, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+                    11: [null, null, null, null, null, null, null, null, 11, 11, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
                 }
             }, {
                 number: 7,
                 events: {
-                    r1: ['', '', '', 'E11', 'E11', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
-                    r2: ['', '', '', '', '', '', '', '', 'E11', 'E11', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+                    10: [null, null, null, 11, 11, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+                    11: [null, null, null, null, null, null, null, null, 11, 11, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
                 }
             }],
             [{
                 number: 8,
                 events: {
-                    r1: ['', '', '', 'E11', 'E11', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
-                    r2: ['', '', '', '', '', '', '', '', 'E11', 'E11', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+                    10: [null, null, null, 11, 11, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+                    11: [null, null, null, null, null, null, null, null, 11, 11, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
                 }
             }, {
                 number: 9,
                 events: {
-                    r1: ['', '', '', 'E11', 'E11', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
-                    r2: ['', '', '', '', '', '', '', '', 'E11', 'E11', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+                    10: [null, null, null, 11, 11, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+                    11: [null, null, null, null, null, null, null, null, 11, 11, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
                 }
             }, {
                 number: 10,
                 events: {
-                    r1: ['', '', '', 'E11', 'E11', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
-                    r2: ['', '', '', '', '', '', '', '', 'E11', 'E11', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+                    10: [null, null, null, 11, 11, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+                    11: [null, null, null, null, null, null, null, null, 11, 11, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
                 }
             }, {
                 number: 11,
                 events: {
-                    r1: ['', '', '', 'E11', 'E11', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
-                    r2: ['', '', '', '', '', '', '', '', 'E11', 'E11', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+                    10: [null, null, null, 11, 11, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+                    11: [null, null, null, null, null, null, null, null, 11, 11, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
                 }
             }, {
                 number: 12,
                 events: {
-                    r1: ['', '', '', 'E11', 'E11', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
-                    r2: ['', '', '', '', '', '', '', '', 'E11', 'E11', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+                    10: [null, null, null, 11, 11, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+                    11: [null, null, null, null, null, null, null, null, 11, 11, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
                 }
             }, {
                 number: 13,
                 events: {
-                    r1: ['', '', '', 'E11', 'E11', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
-                    r2: ['', '', '', '', '', '', '', '', 'E11', 'E11', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+                    10: [null, null, null, 11, 11, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+                    11: [null, null, null, null, null, null, null, null, 11, 11, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
                 }
             }, {
                 number: 14,
                 events: {
-                    r1: ['', '', '', 'E11', 'E11', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
-                    r2: ['', '', '', '', '', '', '', '', 'E11', 'E11', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+                    10: [null, null, null, 11, 11, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+                    11: [null, null, null, null, null, null, null, null, 11, 11, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
                 }
             }]
         ]
+    },
+    methods: {
+        convert: function () {
+            axios.get("api/room").then(res => {
+                this.rooms = res.data.items;
+                this.$store.state.rooms = res.data.items;
+                this.$store.state.events = {
+                    11: {
+                        text: '预定描述'
+                    }
+                };
+            }).catch(function (error) {
+                console.error(error);
+            });
+        }
+    },
+    created() {
+        this.convert();
     },
     mounted() {
         console.log(this);
