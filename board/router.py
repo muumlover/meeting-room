@@ -21,8 +21,8 @@ def setup_router(router):
     router.add_route('GET', '/', handle_view)
     router.add_route('GET', '/echo', wshandle)
 
-    router.add_view(r'/api/room{_:/?}{key:.*}', RoomView)
-    router.add_view(r'/api/event{_:/?}{key:.*}', EventView)
+    router.add_view(r'/api/room/{key:.*}', RoomView)
+    router.add_view(r'/api/event/{key:.*}', EventView)
 
     router.add_route('GET', '/api/group', handle_query_groups)
     router.add_route('GET', '/api/user', handle_query_users)

@@ -121,14 +121,14 @@ const vm = new Vue({
     },
     methods: {
         convert: function () {
-            axios.get("api/room").then(res => {
+            axios.get("api/room/").then(res => {
                 this.$store.state.rooms = res.data.items;
             }).catch(function (error) {
                 console.error(error);
             });
-            axios.get("api/event").then(res => {
-                var map = {};
-                for (var index in res.data.items) {
+            axios.get("api/event/").then(res => {
+                const map = {};
+                for (const index in res.data.items) {
                     map[res.data.items[index].key] = res.data.items[index];
                 }
                 this.$store.state.events = map;
